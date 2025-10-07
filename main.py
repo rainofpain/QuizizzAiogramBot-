@@ -5,8 +5,8 @@ import aiogram.filters as filters
 import dotenv
 import os
 
-from keyboard import start_keyboard
 
+from keyboards import reply_keyboard, actions_inline_keyboard
 
 dotenv.load_dotenv()
 
@@ -19,7 +19,12 @@ dispatcher = aiogram.Dispatcher()
 
 @dispatcher.message(filters.CommandStart())
 async def start_handler(message: types.Message):
-    await message.answer(text = "Hello!", reply_markup = start_keyboard)
+    await message.answer(text = "Hello!", reply_markup = actions_inline_keyboard)
+
+
+@dispatcher.callback_query(aiogram.F.data == "plus_numbers")
+async def plus_numbers(callback_query: types.CallbackQuery):
+    await callback_query.message.answer(f"Сплюсуємо 2 та 10: {2 + 10}")
 
 
 async def main():
