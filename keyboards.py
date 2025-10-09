@@ -11,12 +11,3 @@ reply_keyboard = types.ReplyKeyboardMarkup(
     input_field_placeholder = "Оберіть дію серед поданих"
 )
 
-actions_inline_keyboard = types.InlineKeyboardMarkup(
-    inline_keyboard = [
-        [
-            types.InlineKeyboardButton(text = "10 + 2", callback_data = "plus_numbers")
-        ]
-    ]
-)
-
-
