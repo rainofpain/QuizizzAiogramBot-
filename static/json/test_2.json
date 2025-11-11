@@ -1,0 +1,50 @@
+{
+    "title": "test_2",
+    "questions": {
+        "1": {
+            "text": "Capital of Great Britain?",
+            "answers": [
+                "London",
+                "Kiev",
+                "New-York"
+            ],
+            "correct": "London"
+        },
+        "2": {
+            "text": "Capital of Ukraine?",
+            "answers": [
+                "London",
+                "Kiev",
+                "New-York"
+            ],
+            "correct": "Kiev"
+        },
+        "3": {
+            "text": "Capital of NewYork state?",
+            "answers": [
+                "London",
+                "Kiev",
+                "New-York"
+            ],
+            "correct": "New-York"
+        },
+        "4": {
+            "text": "Capital of Poland?",
+            "answers": [
+                "London",
+                "Warsaw",
+                "New-York"
+            ],
+            "correct": "Warsaw"
+        },
+        "5": {
+            "text": "Capital of Germany?",
+            "answers": [
+                "Berlin",
+                "Kiev",
+                "New-York"
+            ],
+            "correct": "Berlin"
+        }
+    }
+}
