@@ -1,1 +1,1 @@
-from .test1_callback import test1_callback
+from .test_callback import test_callback, TypeCallback
