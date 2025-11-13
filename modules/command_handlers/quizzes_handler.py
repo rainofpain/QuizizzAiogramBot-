@@ -38,4 +38,6 @@ async def quizzes_command(message: types.Message):
         
         await message.answer(text = "Ось доступні тести: ", reply_markup = test_keyboard)
     else:
-        await message.answer(text = "Ви не являєтесь ментором")
+        await message.answer("Ви не являєтесь ментором!" 
+                             "\nCпробуйте команду -/join, щоб приєднатися до тесту як учень"
+                             )
