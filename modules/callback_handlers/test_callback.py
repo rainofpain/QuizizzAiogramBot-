@@ -4,8 +4,9 @@ import aiogram.fsm.context as context
 import aiogram.filters.callback_data as callback_data
 import json
 
-from ..create_path import create_path
+from utils import create_path, create_code
 from config import dispatcher
+
 
 class TypeCallback(callback_data.CallbackData, prefix = "type_callback"):
     callback_type: str
@@ -20,6 +21,7 @@ class TypeCallback(callback_data.CallbackData, prefix = "type_callback"):
 
 """
 
+
 @dispatcher.callback_query(TypeCallback.filter(aiogram.F.callback_type == "test"))
 async def test_callback(callback_query: types.CallbackQuery, callback_data: TypeCallback):
     """
@@ -28,11 +30,7 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     - callback_query
     - callback_data -> зберігає в собі атрибути які прив'язані до кнопки
     """
-    loaded_json = json.load(open(create_path(f"static/json/{callback_data.callback_filename}")))
-    """
-    зберігаємо словник отриманий з відкритого json файлу у окрему змінну
-    """
-    await callback_query.message.answer(text = f"{loaded_json}") 
-    """
-    Відправляємо користувачу масседж колбеку зі змістом вивантаженого json файлу
-    """   
+    
+    loaded_json = json.load(open(create_path(f"static/json/{callback_data.callback_filename}.json")))
+    
+    await callback_query.message.answer(text = f"Код підтвердження: {create_code()}") 
