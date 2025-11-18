@@ -43,18 +43,21 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     
     print(callback_data.mentor_id)
 
-    test = {
-        "entry_code": entry_code,
-        "loaded_test": loaded_json,
-        "students_list": students_list,
-        "mentor_id": callback_data.mentor_id
-    }
-    
-    active_tests_list.append(test)
 
     await callback_query.message.answer(text = f"Код підтвердження: {entry_code}") 
     
     
     await callback_query.message.answer(text = f"Всі учасники: ")
     message_id = callback_query.message.message_id
+
+    test = {
+        "entry_code": entry_code,
+        "loaded_test": loaded_json,
+        "students_list": students_list,
+        "mentor_id": callback_data.mentor_id,
+        "message_id": message_id
+    }
+    
+    active_tests_list.append(test)
+
     print(message_id)
