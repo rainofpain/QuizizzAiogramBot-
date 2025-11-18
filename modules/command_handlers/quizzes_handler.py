@@ -30,7 +30,13 @@ async def quizzes_command(message: types.Message):
         
         for json_filename in json_filenames_list:
             
-            button = types.InlineKeyboardButton(text = json_filename, callback_data= TypeCallback(callback_type = "test", callback_filename = json_filename[0:-5]).pack())
+            button = types.InlineKeyboardButton(
+                text = json_filename, 
+                callback_data = TypeCallback(
+                    callback_type = "test", 
+                    callback_filename = json_filename[0:-5], 
+                    mentor_id = message.from_user.id).pack()
+            )
             
             buttons_list.append(button)
         test_keyboard.inline_keyboard.append(buttons_list)

@@ -10,6 +10,7 @@ from config import dispatcher, entry_code_list, active_tests_list
 class TypeCallback(callback_data.CallbackData, prefix = "type_callback"):
     callback_type: str
     callback_filename: str
+    mentor_id: int
 """
 Створюємо класс TypeCallback від классу CallbackData 
 
@@ -37,13 +38,23 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     entry_code = create_code()
     while entry_code in entry_code_list:
         entry_code = create_code()
+    
+    
+    
+    print(callback_data.mentor_id)
 
     test = {
         "entry_code": entry_code,
         "loaded_test": loaded_json,
-        "students_list": students_list
-        }
+        "students_list": students_list,
+        "mentor_id": callback_data.mentor_id
+    }
     
     active_tests_list.append(test)
 
     await callback_query.message.answer(text = f"Код підтвердження: {entry_code}") 
+    
+    
+    await callback_query.message.answer(text = f"Всі учасники: ")
+    message_id = callback_query.message.message_id
+    print(message_id)

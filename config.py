@@ -11,7 +11,7 @@ bot = aiogram.Bot(token = TOKEN)
 dispatcher = aiogram.Dispatcher()
 
 my_id = 996602601
-mentors_ids = [my_id]
+mentors_ids = [my_id, 1521234621]
 entry_code_list = []
 
 active_tests_list = []
