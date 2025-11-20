@@ -1,20 +1,18 @@
 import aiogram.fsm.context as context
 import aiogram.types as types
 
-from config import dispatcher, active_tests_list, bot
+from config import bot, dispatcher, active_tests_list, StartCallback
 from ..keyboards import start_test_keyboard
 from ..state_groups import LobbyAuthorizationState
 
+
 @dispatcher.message(LobbyAuthorizationState.lobby_name)
 async def update_lobby_authorization_state(message: types.Message, state: context.FSMContext):
+    
     user_id = message.from_user.id
     lobby_name = message.text
-    start_button = types.InlineKeyboardButton(
-        text = "ПОЧАТИ ТЕСТ", 
-        callback_data= "start_test"
-        )
-        
-
+    
+    
     await state.update_data(lobby_name = lobby_name)
     for test in active_tests_list:
         for user in test["students_list"]:
@@ -22,11 +20,16 @@ async def update_lobby_authorization_state(message: types.Message, state: contex
                 user["user_lobby_name"] = lobby_name
                 mentor_id = test["mentor_id"]
                 message_id = test["message_id"]
+                
+                filename = test["loaded_test_name"]
                 lobby_names = ", ".join(user["user_lobby_name"] for user in test["students_list"])
                 
                 if len(test["students_list"]) > 0:
-                    start_test_keyboard.inline_keyboard[0][0] = start_button
-
+                    start_test_keyboard.inline_keyboard[0][0] = types.InlineKeyboardButton(
+                        text = "ПОЧАТИ ТЕСТ", 
+                        callback_data = StartCallback(filename = filename).pack()
+                    )
+                
                 await bot.edit_message_text(
                     chat_id = mentor_id,
                     message_id = message_id, 
@@ -35,6 +38,6 @@ async def update_lobby_authorization_state(message: types.Message, state: contex
                     )
                 break
     await state.clear()
-     
+
 
 

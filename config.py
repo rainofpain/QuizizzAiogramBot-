@@ -2,6 +2,8 @@ import aiogram
 import dotenv
 import os
 
+import aiogram.filters.callback_data as callback_data
+
 
 dotenv.load_dotenv()
 
@@ -23,3 +25,7 @@ active_tests_list = []
 test = ["code", "loaded_json", [students_list]]
 
 """
+
+
+class StartCallback(callback_data.CallbackData, prefix = "start_test"):
+    filename: str

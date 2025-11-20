@@ -8,7 +8,7 @@
                 "Kiev",
                 "New-York"
             ],
-            "correct": "London"
+            "correct": 0
         },
         "2": {
             "text": "Capital of Ukraine?",

@@ -22,7 +22,7 @@ class TypeCallback(callback_data.CallbackData, prefix = "type_callback"):
 """
 
 
-@dispatcher.callback_query(TypeCallback.filter(aiogram.F.callback_type == "test"))
+@dispatcher.callback_query(TypeCallback.filter())
 async def test_callback(callback_query: types.CallbackQuery, callback_data: TypeCallback):
     """
     Функція для обробки Колбеку виду test
@@ -47,7 +47,7 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     
     test = {
         "entry_code": entry_code,
-        "loaded_test": loaded_json,
+        "loaded_test_name": f"static/json/{callback_data.callback_filename}.json",
         "students_list": students_list,
         "mentor_id": callback_data.mentor_id,
         "message_id": message_id
