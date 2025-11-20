@@ -2,27 +2,44 @@ import aiogram.fsm.context as context
 import aiogram.types as types
 
 from config import dispatcher, active_tests_list
-from ..command_handlers import join_command
-from ..keyboards import start_test_keyboard
-from ..state_groups import Join_state
+from ..state_groups import JoinState, LobbyAuthorizationState
 
-@dispatcher.message(Join_state.code)
+@dispatcher.message(JoinState.code)
 async def update_join_state(message: types.Message, state: context.FSMContext):
     is_code_in_list = False
     entered_code = message.text
     
     await state.update_data(code = message.text)
-    # entered_code = await state.get_data()
+    
     for test in active_tests_list:
         if entered_code in test["entry_code"]:
-            test["students_list"].append((message.from_user.full_name,message.from_user.id))
-            mentor_id = test["mentor_id"]
+            user_info = {
+                "user_id": message.from_user.id,
+                "user_lobby_name": ""
+            }
+            if len(test["students_list"]) == 0:
+                test["students_list"].append(user_info)
+                await state.clear()
+                await message.answer(text = "Введіть ваше ім'я: ")
+                await state.set_state(LobbyAuthorizationState.lobby_name)
+                is_code_in_list = True
+                break
             
-            await message.answer(text = "Правильно")
-            await state.clear()
-            
+            elif len(test["students_list"]) > 0:
+                for user in test["students_list"]:
+                    if user_info["user_id"] == user["user_id"] and user["user_lobby_name"] != "":
+                        await message.answer(text= "Користувач вже є в списку")
+                        is_code_in_list = True
+                        break
+                    else:    
+                        test["students_list"].append(user_info)
+                        await state.clear()
+                        await message.answer(text = "Введіть ваше ім'я: ")
+                        await state.set_state(LobbyAuthorizationState.lobby_name)
+                        is_code_in_list = True
+                        break
+
             is_code_in_list = True
-            break
         else: 
             is_code_in_list = False
     
@@ -32,5 +49,5 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
         await state.clear()
         
         await message.answer(text = "Введіть код: ")
-        await state.set_state(Join_state.code)
+        await state.set_state(JoinState.code)
         

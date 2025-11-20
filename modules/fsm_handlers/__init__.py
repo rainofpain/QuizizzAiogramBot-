@@ -1,1 +1,2 @@
-from .fsm_join import Join_state, update_join_state
+from .fsm_join import update_join_state
+from .fsm_lobby_authorization import update_lobby_authorization_state

@@ -9,6 +9,7 @@ async def start_command(message: types.Message):
     """
     Функція обробник хендлера команди /start
     """
+    
     await message.answer(
         "Вітаю!"
         "\nЯ Quizizz бот"
