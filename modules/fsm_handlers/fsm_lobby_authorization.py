@@ -20,7 +20,7 @@ async def update_lobby_authorization_state(message: types.Message, state: contex
         for user in test["students_list"]:
             if user_id == user["user_id"]:
                 user["user_lobby_name"] = lobby_name
-                chat_id = test["mentor_chat_id"]
+                mentor_id = test["mentor_id"]
                 message_id = test["message_id"]
                 lobby_names = ", ".join(user["user_lobby_name"] for user in test["students_list"])
                 
@@ -28,13 +28,13 @@ async def update_lobby_authorization_state(message: types.Message, state: contex
                     start_test_keyboard.inline_keyboard[0][0] = start_button
 
                 await bot.edit_message_text(
-                    chat_id = chat_id,
+                    chat_id = mentor_id,
                     message_id = message_id, 
                     text = f"Всі учасники: \n{lobby_names}",
                     reply_markup = start_test_keyboard
                     )
                 break
     await state.clear()
-                
+     
 
 

@@ -44,17 +44,13 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     
     members_message = await callback_query.message.answer(text = "Всі учасники: ")
     message_id = members_message.message_id
-
-
-    chat_id = callback_query.message.chat.id
     
     test = {
         "entry_code": entry_code,
         "loaded_test": loaded_json,
         "students_list": students_list,
         "mentor_id": callback_data.mentor_id,
-        "message_id": message_id,
-        "mentor_chat_id": chat_id
+        "message_id": message_id
     }
     
     active_tests_list.append(test)
