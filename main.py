@@ -1,6 +1,4 @@
 import asyncio 
-import aiogram.filters as filters
-import aiogram.types as types
 
 from config import dispatcher, bot
 from modules import *

@@ -30,8 +30,7 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     - callback_query
     - callback_data -> зберігає в собі атрибути які прив'язані до кнопки
     """
-    with open(create_path(f"static/json/{callback_data.callback_filename}.json")) as json_file:
-        loaded_json = json.load(json_file)
+    loaded_test_name = f"static/json/{callback_data.callback_filename}.json"
 
     students_list = []
 
@@ -47,7 +46,7 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     
     test = {
         "entry_code": entry_code,
-        "loaded_test_name": f"static/json/{callback_data.callback_filename}.json",
+        "loaded_test_name": loaded_test_name,
         "students_list": students_list,
         "mentor_id": callback_data.mentor_id,
         "message_id": message_id

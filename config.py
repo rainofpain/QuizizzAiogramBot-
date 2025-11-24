@@ -29,3 +29,9 @@ test = ["code", "loaded_json", [students_list]]
 
 class StartCallback(callback_data.CallbackData, prefix = "start_test"):
     filename: str
+
+class AnswerButtonCallback(callback_data.CallbackData, prefix = "answer_button"):
+    answer_key: int
+    correct_answer: int
+    points: int
+    filename: str

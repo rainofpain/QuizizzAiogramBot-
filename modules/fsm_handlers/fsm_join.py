@@ -37,9 +37,7 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
                         await message.answer(text = "Введіть ваше ім'я: ")
                         await state.set_state(LobbyAuthorizationState.lobby_name)
                         is_code_in_list = True
-                        break
-
-            is_code_in_list = True
+                break
         else: 
             is_code_in_list = False
     
