@@ -33,5 +33,6 @@ class StartCallback(callback_data.CallbackData, prefix = "start_test"):
 class AnswerButtonCallback(callback_data.CallbackData, prefix = "answer_button"):
     answer_key: int
     correct_answer: int
+    index: int
     points: int
     filename: str

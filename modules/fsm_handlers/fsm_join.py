@@ -15,7 +15,8 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
         if entered_code in test["entry_code"]:
             user_info = {
                 "user_id": message.from_user.id,
-                "user_lobby_name": ""
+                "user_lobby_name": "",
+                "user_message_id": None
             }
             if len(test["students_list"]) == 0:
                 test["students_list"].append(user_info)

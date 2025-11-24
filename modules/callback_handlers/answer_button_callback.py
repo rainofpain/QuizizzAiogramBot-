@@ -1,7 +1,7 @@
 import aiogram.types as types
 import json
 
-from config import dispatcher, StartCallback, AnswerButtonCallback
+from config import dispatcher, AnswerButtonCallback, active_tests_list, bot
 from utils import create_path
 from ..keyboards import answer_keyboard
 
@@ -14,12 +14,10 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
         loaded_file = json.load(file)
     
     test_length = loaded_file["questions"].keys()
-    previous_answers_list = loaded_file["questions"][f"{callback_data.answer_key}"]["answers"]
     points = callback_data.points
 
-    for answer in previous_answers_list:
-            if callback_data.correct_answer == previous_answers_list.index(answer):
-                points += 1
+    if callback_data.correct_answer == callback_data.index:
+        points += 1
                 
     question_number = callback_data.answer_key + 1
 
@@ -40,6 +38,7 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                 callback_data = AnswerButtonCallback(
                     answer_key = question_number,
                     correct_answer = correct,
+                    index = answers_list.index(answer),
                     points = points,
                     filename = filename                        
                     ).pack()
@@ -47,7 +46,29 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
             buttons_list.append(button)
             
         answer_keyboard.inline_keyboard.append(buttons_list)
-        
-        await callback_query.message.edit_text(text = question, reply_markup = answer_keyboard)
+
+        for test in active_tests_list:
+            if test["loaded_test_name"] == filename:
+                for user in test["students_list"]:
+                    if callback_query.from_user.id == user["user_id"]:
+                        await bot.edit_message_text(
+                                chat_id = user["user_id"],
+                                message_id = user["user_message_id"], 
+                                text = question,
+                                reply_markup = answer_keyboard
+                                ) 
+                        break
+                break
     else:
-        await callback_query.message.edit_text(text = f"Тест завершено!\n Правильніх відповідей: {points}", reply_markup = answer_keyboard)
+        for test in active_tests_list:
+            if test["loaded_test_name"] == filename:
+                for user in test["students_list"]:
+                    if callback_query.from_user.id == user["user_id"]:
+                        await bot.edit_message_text(
+                                chat_id = user["user_id"],
+                                message_id = user["user_message_id"], 
+                                text = f"Тест завершено!\n Правильніх відповідей: {points}",
+                                reply_markup = answer_keyboard
+                                ) 
+                        break
+                break

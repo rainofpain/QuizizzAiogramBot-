@@ -13,11 +13,14 @@ async def update_lobby_authorization_state(message: types.Message, state: contex
     lobby_name = message.text
     
     await state.update_data(lobby_name = lobby_name)
-    
+    user_message = await message.answer("Чейкайте початку тесту")
+    user_message_id = user_message.message_id
+
     for test in active_tests_list:
         for user in test["students_list"]:
             if user_id == user["user_id"]:
                 user["user_lobby_name"] = lobby_name
+                user["user_message_id"] = user_message_id
                 mentor_id = test["mentor_id"]
                 mentor_message_id = test["message_id"]
                 
