@@ -13,7 +13,7 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
     with open(create_path(filename)) as file:
         loaded_file = json.load(file)
     
-    test_length = loaded_file["questions"].keys()
+    test_length = len(loaded_file["questions"].keys())
     points = callback_data.points
 
     if callback_data.correct_answer == callback_data.index:
@@ -24,7 +24,7 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
     buttons_list = []
     answer_keyboard.inline_keyboard = []
 
-    if question_number <= len(test_length):
+    if question_number <= test_length:
         
 
         question = loaded_file["questions"][f"{question_number}"]["text"]
@@ -51,6 +51,7 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
             if test["loaded_test_name"] == filename:
                 for user in test["students_list"]:
                     if callback_query.from_user.id == user["user_id"]:
+                        user["user_progress"] += 1
                         await bot.edit_message_text(
                                 chat_id = user["user_id"],
                                 message_id = user["user_message_id"], 
@@ -58,12 +59,23 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                                 reply_markup = answer_keyboard
                                 ) 
                         break
+                lobby_progress = "\n".join(f"{user["user_lobby_name"]}: {user["user_progress"]}/{test_length}" for user in test["students_list"])
+
+                mentor_id = test["mentor_id"]
+                mentor_message_id = test["message_id"]
+
+                await bot.edit_message_text(
+                                chat_id = mentor_id,
+                                message_id = mentor_message_id, 
+                                text = f"Прогресс проходження тесту:\n {lobby_progress}"
+                                )
                 break
     else:
         for test in active_tests_list:
             if test["loaded_test_name"] == filename:
                 for user in test["students_list"]:
                     if callback_query.from_user.id == user["user_id"]:
+                        user["user_progress"] += 1     
                         await bot.edit_message_text(
                                 chat_id = user["user_id"],
                                 message_id = user["user_message_id"], 
@@ -71,4 +83,14 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                                 reply_markup = answer_keyboard
                                 ) 
                         break
+                lobby_progress = "\n".join(f"{user["user_lobby_name"]}: {user["user_progress"]}/{test_length}" for user in test["students_list"])
+
+                mentor_id = test["mentor_id"]
+                mentor_message_id = test["message_id"]
+
+                await bot.edit_message_text(
+                                chat_id = mentor_id,
+                                message_id = mentor_message_id, 
+                                text = f"Прогресс проходження тесту:\n {lobby_progress}"
+                                )
                 break

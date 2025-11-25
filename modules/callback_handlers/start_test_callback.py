@@ -20,6 +20,7 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
     question = loaded_file["questions"][f"{question_number}"]["text"]
     correct = loaded_file["questions"][f"{question_number}"]["correct"]
     answers_list = loaded_file["questions"][f"{question_number}"]["answers"]
+    test_lenght = len(loaded_file["questions"].keys())
 
     for answer in answers_list:
         
@@ -37,11 +38,11 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
         buttons_list.append(button)
         
     answer_keyboard.inline_keyboard.append(buttons_list)
-
-    await callback_query.message.edit_text(text = "Тест розпочато")
-
+        
     for test in active_tests_list:
         if test["loaded_test_name"] == filename:
+
+
             for user in test["students_list"]:
                 await bot.edit_message_text(
                         chat_id = user["user_id"],
@@ -49,6 +50,11 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
                         text = question,
                         reply_markup = answer_keyboard
                         ) 
+
+        lobby_progress = "\n".join(f"{user["user_lobby_name"]}: {user["user_progress"]}/{test_lenght}" for user in test["students_list"])
+        progress = await callback_query.message.edit_text(text = f"Прогресс проходження тесту:\n {lobby_progress}")
+        print(progress.message_id)
+
         break
     
     
