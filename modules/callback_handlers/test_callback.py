@@ -31,14 +31,14 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     - callback_data -> зберігає в собі атрибути які прив'язані до кнопки
     """
     loaded_test_name = f"static/json/{callback_data.callback_filename}.json"
-
+    
     students_list = []
-
+    
     entry_code = create_code()
     while entry_code in entry_code_list:
         entry_code = create_code()
-
-
+    
+    
     await callback_query.message.answer(text = f"Код підтвердження: {entry_code}") 
     
     members_message = await callback_query.message.answer(text = "Всі учасники: ")

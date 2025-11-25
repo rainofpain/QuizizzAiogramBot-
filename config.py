@@ -13,7 +13,7 @@ bot = aiogram.Bot(token = TOKEN)
 dispatcher = aiogram.Dispatcher()
 
 my_id = 996602601
-mentors_ids = [my_id, 1521234621]
+mentors_ids = [my_id]
 entry_code_list = []
 
 active_tests_list = []
@@ -29,6 +29,7 @@ test = ["code", "loaded_json", [students_list]]
 
 class StartCallback(callback_data.CallbackData, prefix = "start_test"):
     filename: str
+    entry_code: str
 
 class AnswerButtonCallback(callback_data.CallbackData, prefix = "answer_button"):
     answer_key: int
@@ -36,3 +37,8 @@ class AnswerButtonCallback(callback_data.CallbackData, prefix = "answer_button")
     index: int
     points: int
     filename: str
+    entry_code: str
+
+
+class FinishTestCallback(callback_data.CallbackData, prefix = "finish_test"):
+    entry_code: str

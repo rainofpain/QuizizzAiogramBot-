@@ -6,6 +6,7 @@ from ..state_groups import JoinState, LobbyAuthorizationState
 
 @dispatcher.message(JoinState.code)
 async def update_join_state(message: types.Message, state: context.FSMContext):
+    
     is_code_in_list = False
     entered_code = message.text
     
@@ -17,14 +18,17 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
                 "user_id": message.from_user.id,
                 "user_lobby_name": "",
                 "user_message_id": None,
-                "user_progress": 0
+                "user_progress": 0,
+                "completed": False
             }
+            
             if len(test["students_list"]) == 0:
                 test["students_list"].append(user_info)
                 await state.clear()
                 await message.answer(text = "Введіть ваше ім'я: ")
                 await state.set_state(LobbyAuthorizationState.lobby_name)
                 is_code_in_list = True
+                
                 break
             
             elif len(test["students_list"]) > 0:
@@ -32,6 +36,7 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
                     if user_info["user_id"] == user["user_id"] and user["user_lobby_name"] != "":
                         await message.answer(text= "Користувач вже є в списку")
                         is_code_in_list = True
+                        
                         break
                     else:    
                         test["students_list"].append(user_info)
@@ -39,6 +44,9 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
                         await message.answer(text = "Введіть ваше ім'я: ")
                         await state.set_state(LobbyAuthorizationState.lobby_name)
                         is_code_in_list = True
+                        
+                        break
+                
                 break
         else: 
             is_code_in_list = False
@@ -50,4 +58,3 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
         
         await message.answer(text = "Введіть код: ")
         await state.set_state(JoinState.code)
-        

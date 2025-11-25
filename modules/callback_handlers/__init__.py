@@ -1,3 +1,4 @@
 from .test_callback import test_callback, TypeCallback
 from .start_test_callback import start_test_callback
 from .answer_button_callback import answer_button_callback
+from .finish_test_callback import finish_test_callback

@@ -5,8 +5,10 @@ import aiogram.fsm.context as context
 from config import dispatcher, mentors_ids
 from ..state_groups import JoinState
 
+
 @dispatcher.message(filters.Command(commands = "join"))
 async def join_command(message: types.Message, state: context.FSMContext):
+    
     telegram_id = message.from_user.id
     
     if telegram_id in mentors_ids:
@@ -14,4 +16,3 @@ async def join_command(message: types.Message, state: context.FSMContext):
     else:
         await message.answer(text = "Введіть код: ")
         await state.set_state(JoinState.code)
-    
