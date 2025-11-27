@@ -1,7 +1,7 @@
 import aiogram.types as types
 import json
 
-from config import dispatcher, StartCallback, AnswerButtonCallback, active_tests_list, bot
+from config import dispatcher, StartCallback, AnswerButtonCallback, FinishTestCallback, active_tests_list, bot
 from utils import create_path
 from ..keyboards import answer_keyboard
 
@@ -33,7 +33,6 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
                 answer_key = question_number,
                 correct_answer = correct,
                 index = answers_list.index(answer),
-                points = 0,
                 filename = filename,
                 entry_code = entry_code                       
                 ).pack()
@@ -55,7 +54,13 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
                 ) 
         
         lobby_progress = "\n".join(f"{user["user_lobby_name"]}: {user["user_progress"]}/{test_lenght}" for user in test["students_list"])
-        progress = await callback_query.message.edit_text(text = f"Прогресс проходження тесту:\n {lobby_progress}")
-        print(progress.message_id)
+        await callback_query.message.edit_text(
+            text = f"Прогресс проходження тесту:\n {lobby_progress}",
+            reply_markup = types.InlineKeyboardMarkup(inline_keyboard = [
+                        [
+                            types.InlineKeyboardButton(text = "Завершити тест", callback_data = FinishTestCallback(entry_code = entry_code).pack())
+                        ]
+                    ])
+            )
         
         break

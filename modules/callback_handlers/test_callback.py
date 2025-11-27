@@ -43,7 +43,6 @@ async def test_callback(callback_query: types.CallbackQuery, callback_data: Type
     
     members_message = await callback_query.message.answer(text = "Всі учасники: ")
     message_id = members_message.message_id
-    print(message_id)
     
     test = {
         "entry_code": entry_code,

@@ -13,13 +13,13 @@ async def update_join_state(message: types.Message, state: context.FSMContext):
     await state.update_data(code = message.text)
     
     for test in active_tests_list:
-        if entered_code in test["entry_code"]:
+        if entered_code == test["entry_code"]:
             user_info = {
                 "user_id": message.from_user.id,
                 "user_lobby_name": "",
                 "user_message_id": None,
                 "user_progress": 0,
-                "completed": False
+                "user_points": 0
             }
             
             if len(test["students_list"]) == 0:

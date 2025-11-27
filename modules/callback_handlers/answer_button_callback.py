@@ -16,10 +16,6 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
         loaded_file = json.load(file)
     
     test_length = len(loaded_file["questions"].keys())
-    points = callback_data.points
-    
-    if callback_data.correct_answer == callback_data.index:
-        points += 1
     
     question_number = callback_data.answer_key + 1
     
@@ -39,7 +35,6 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                     answer_key = question_number,
                     correct_answer = correct,
                     index = answers_list.index(answer),
-                    points = points,
                     filename = filename,
                     entry_code = entry_code                       
                     ).pack()
@@ -53,6 +48,8 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                 for user in test["students_list"]:
                     if callback_query.from_user.id == user["user_id"]:
                         user["user_progress"] += 1
+                        if callback_data.correct_answer == callback_data.index:
+                            user["user_points"] += 1
                         await bot.edit_message_text(
                             chat_id = user["user_id"],
                             message_id = user["user_message_id"], 
@@ -83,11 +80,13 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                     
                     if callback_query.from_user.id == user["user_id"]:
                         user["user_progress"] += 1
+                        if callback_data.correct_answer == callback_data.index:
+                            user["user_points"] += 1
                         
                         await bot.edit_message_text(
                             chat_id = user["user_id"],
                             message_id = user["user_message_id"], 
-                            text = f"Тест завершено!\n Правильніх відповідей: {points}"
+                            text = f"Тест завершено!\n Правильніх відповідей: {user["user_points"]}"
                         )
                         
                         break

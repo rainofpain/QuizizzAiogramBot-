@@ -35,7 +35,6 @@ class AnswerButtonCallback(callback_data.CallbackData, prefix = "answer_button")
     answer_key: int
     correct_answer: int
     index: int
-    points: int
     filename: str
     entry_code: str
 

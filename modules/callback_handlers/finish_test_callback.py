@@ -13,7 +13,9 @@ async def finish_test_callback(callback_query: types.CallbackQuery, callback_dat
                     message_id = user["user_message_id"], 
                     text = f"Тест завершено!"
                     )
+            lobby_results = "\n".join(f"{user["user_lobby_name"]}: {user["user_points"]} правильних відповідей" for user in test["students_list"])
             active_tests_list.remove(test)
             await callback_query.message.answer(text = "Тест успішно завершено!")
+            await callback_query.message.answer(text = f"Результати: \n{lobby_results}")
     
     
