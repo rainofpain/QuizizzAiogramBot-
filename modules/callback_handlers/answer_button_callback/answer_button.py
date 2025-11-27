@@ -1,9 +1,10 @@
 import aiogram.types as types
 import json
 
-from config import dispatcher, AnswerButtonCallback, FinishTestCallback, active_tests_list, bot
-from utils import create_path
-from ..keyboards import answer_keyboard
+from config import dispatcher, AnswerButtonCallback, active_tests_list, bot
+from utils import create_path, check_entry_code, check_user_id
+from ...keyboards import answer_keyboard
+from .lobby_progress import lobby_progress
 
 
 @dispatcher.callback_query(AnswerButtonCallback.filter())
@@ -11,13 +12,16 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
     
     filename = callback_data.filename
     entry_code = callback_data.entry_code
+    question_number = callback_data.answer_key + 1
+    
+    callback_user_id = callback_query.from_user.id
+    
     
     with open(create_path(filename)) as file:
         loaded_file = json.load(file)
     
     test_length = len(loaded_file["questions"].keys())
     
-    question_number = callback_data.answer_key + 1
     
     buttons_list = []
     answer_keyboard.inline_keyboard = []
@@ -44,9 +48,9 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
         answer_keyboard.inline_keyboard.append(buttons_list)
         
         for test in active_tests_list:
-            if test["entry_code"] == entry_code:
+            if check_entry_code(test, entry_code):
                 for user in test["students_list"]:
-                    if callback_query.from_user.id == user["user_id"]:
+                    if check_user_id(callback_user_id, user["user_id"]):
                         user["user_progress"] += 1
                         if callback_data.correct_answer == callback_data.index:
                             user["user_points"] += 1
@@ -57,28 +61,20 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                             reply_markup = answer_keyboard
                         )
                         break
-                lobby_progress = "\n".join(f"{user["user_lobby_name"]}: {user["user_progress"]}/{test_length}" for user in test["students_list"])
                 
-                mentor_id = test["mentor_id"]
-                mentor_message_id = test["message_id"]
-                
-                await bot.edit_message_text(
-                    chat_id = mentor_id,
-                    message_id = mentor_message_id, 
-                    text = f"Прогресс проходження тесту:\n {lobby_progress}",
-                    reply_markup = types.InlineKeyboardMarkup(inline_keyboard = [
-                        [
-                            types.InlineKeyboardButton(text = "Завершити тест", callback_data = FinishTestCallback(entry_code = entry_code).pack())
-                        ]
-                    ])
+                await lobby_progress(
+                    test = test,
+                    entry_code = entry_code,
+                    test_length = test_length
                 )
+                
                 break
     else:
         for test in active_tests_list:
-            if test["entry_code"] == entry_code:
+            if check_entry_code(test, entry_code):
                 for user in test["students_list"]:
                     
-                    if callback_query.from_user.id == user["user_id"]:
+                    if check_user_id(callback_user_id, user["user_id"]):
                         user["user_progress"] += 1
                         if callback_data.correct_answer == callback_data.index:
                             user["user_points"] += 1
@@ -91,20 +87,10 @@ async def answer_button_callback(callback_query: types.CallbackQuery, callback_d
                         
                         break
                 
-                lobby_progress = "\n".join(f"{user["user_lobby_name"]}: {user["user_progress"]}/{test_length}" for user in test["students_list"])
-                
-                mentor_id = test["mentor_id"]
-                mentor_message_id = test["message_id"]
-                
-                await bot.edit_message_text(
-                    chat_id = mentor_id,
-                    message_id = mentor_message_id, 
-                    text = f"Прогресс проходження тесту:\n {lobby_progress}",
-                    reply_markup = types.InlineKeyboardMarkup(inline_keyboard = [
-                        [
-                            types.InlineKeyboardButton(text = "Завершити тест", callback_data = FinishTestCallback(entry_code = entry_code).pack())
-                        ]
-                    ])
+                await lobby_progress(
+                    test = test,
+                    entry_code = entry_code,
+                    test_length = test_length
                 )
                 
                 break

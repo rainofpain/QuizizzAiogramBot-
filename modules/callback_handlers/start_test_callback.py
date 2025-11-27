@@ -2,7 +2,7 @@ import aiogram.types as types
 import json
 
 from config import dispatcher, StartCallback, AnswerButtonCallback, FinishTestCallback, active_tests_list, bot
-from utils import create_path
+from utils import create_path, check_entry_code
 from ..keyboards import answer_keyboard
 
 
@@ -43,8 +43,7 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
     answer_keyboard.inline_keyboard.append(buttons_list)
     
     for test in active_tests_list:
-        if test["entry_code"] == entry_code:
-            
+        if check_entry_code(test, entry_code):
             for user in test["students_list"]:
                 await bot.edit_message_text(
                     chat_id = user["user_id"],
@@ -57,10 +56,10 @@ async def start_test_callback(callback_query: types.CallbackQuery, callback_data
         await callback_query.message.edit_text(
             text = f"Прогресс проходження тесту:\n {lobby_progress}",
             reply_markup = types.InlineKeyboardMarkup(inline_keyboard = [
-                        [
-                            types.InlineKeyboardButton(text = "Завершити тест", callback_data = FinishTestCallback(entry_code = entry_code).pack())
-                        ]
-                    ])
+                    [
+                        types.InlineKeyboardButton(text = "Завершити тест", callback_data = FinishTestCallback(entry_code = entry_code).pack())
+                    ]
+                ])
             )
         
         break
