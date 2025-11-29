@@ -14,7 +14,6 @@ dispatcher = aiogram.Dispatcher()
 
 my_id = 996602601
 mentors_ids = [my_id]
-entry_code_list = []
 
 active_tests_list = []
 """

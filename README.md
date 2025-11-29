@@ -1,11 +1,12 @@
 # Quizizz Telegram Bot
 
 ## About
-
+This **BOT** provides an opportunity for the teacher to run tests from loaded `.json` file for a group of students with access via code
 
 ## Navigation
-- [Installation](#installation) 
-
+- [Installation](#installation)
+- [Technologies used](#technologies-used)
+- [Project structure](#project-structure)
 ## Installation
 
 1. Clone the repository
@@ -55,4 +56,37 @@ pip install -r requirements.txt
 8. Run the project (run `main.py`)
 ```
 python main.py
+```
+---
+## Technologies Used
+
+>[**Back to navigation**](#navigation) 
+ 
+| **Technology**  | **Description** |
+| :-------------: | -------------      |
+| [Aiogram](https://docs.aiogram.dev/)| The *main technology* on which the **bot** is built|
+| [Python](https://www.python.org/)| Primary programming language|
+
+---
+## Project structure
+
+>[**Back to navigation**](#navigation)
+
+```mermaid
+graph TD;
+    ProjectName[**QuizizzAiogramBOT**] 
+
+    ProjectName ---> modules[*modules*];
+    ProjectName ---> static[*static*];
+    ProjectName ---> utils[*utils*];
+    ProjectName --> config[***config.py***];
+    ProjectName --> main[***main.py***];
+
+    modules --> CallbackHandlers[*callback handlers*];
+    modules --> CommandHandlers[*command handlers*];
+    modules --> FSMHandlers[*fsm handlers*];
+    modules --> Keyboards[*keyboards*];
+
+    static --> Json[*json*]
+
 ```
