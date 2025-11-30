@@ -7,6 +7,7 @@ This **BOT** provides an opportunity for the teacher to run tests from loaded `.
 - [Installation](#installation)
 - [Technologies used](#technologies-used)
 - [Project structure](#project-structure)
+- [Documentation](#documentation)
 ## Installation
 
 1. Clone the repository
@@ -68,6 +69,7 @@ python main.py
 | [Python](https://www.python.org/)| Primary programming language|
 
 ---
+
 ## Project structure
 
 >[**Back to navigation**](#navigation)
@@ -88,5 +90,56 @@ graph TD;
     modules --> Keyboards[*keyboards*];
 
     static --> Json[*json*]
-
 ```
+
+## Documentation
+
+>[**Back to navigation**](#navigation)
+
+Documentation contains short description for each package and module to explain the main features
+
+---
+<details>
+<summary> Modules </summary>
+</p> Modules -> contains the parts on which the main functionality is based</p>
+<details>
+<summary> Command Handlers </summary>
+</p> Command Handlers -> contains the modules for command handlers that enable bot–user interaction via commands</p>
+</details>
+
+<details>
+<summary> Callback Handlers </summary>
+</p> Callback Handlers -> contains the modules for сallback handlers that process callback events</p>
+</details>
+
+<details>
+<summary> FSM Handlers </summary>
+</details>
+
+<details>
+<summary> State groups </summary>
+</details>
+
+<details>
+<summary> Keyboards </summary>
+</details>
+
+</details>
+
+---
+
+<details>
+<summary> Utils </summary>
+</details>
+
+---
+
+<details>
+<summary> config.py </summary>
+</details>
+
+---
+
+<details>
+<summary> main.py </summary>
+</details>
