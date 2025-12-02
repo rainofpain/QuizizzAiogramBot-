@@ -3,7 +3,7 @@
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)
 
 <p>
-    <img src="https://img.shields.io/github/stars/rainofpain/QuizizzAiogramBot?style=social">
+    <img src="https://img.shields.io/github/stars/rainofpain/QuizizzAiogramBot-?style=social">
 <p>
 
 
@@ -18,7 +18,6 @@ This **BOT** provides an opportunity for the teacher to run tests from loaded `.
 - [Project future](#project-future)
 - [Project summary](#project-summary)
 ## Installation
-
 1. Clone the repository
 ```
 git clone https://github.com/rainofpain/QuizizzAiogramBot-.git
@@ -28,10 +27,19 @@ git clone https://github.com/rainofpain/QuizizzAiogramBot-.git
 cd QuizizzAiogramBot-
 ```
 3. Create virtual environment
+
+* For **Windows**
 ```
 python -m venv venv
 ```
+
+* For **MacOS**
+```
+python3 -m venv venv
+```
+
 4. Activate virtual environment
+
 * Activation for **Git Bash**
 ```
 source venv/Scripts/activate
@@ -64,9 +72,17 @@ pip install -r requirements.txt
 7. Fill your `.env` with the information required for the **bot** as in the `.env-sample` file in main directory
 
 8. Run the project (run `main.py`)
+
+* For **Windows**
 ```
 python main.py
 ```
+
+* For **MacOS**
+```
+python3 main.py
+```
+
 ---
 ## Technologies Used
 
@@ -125,12 +141,14 @@ Documentation contains short description for each package and module to explain 
 <details>
 <summary> callback_handlers/ </summary>
 <p></p>
-<p> Callback Handlers -> contains the modules for сallback handlers that process callback events</p>
+
+`command_handlers/` -> contains the modules for сallback handlers that process callback events
 
 <details>
-<summary> answer_button_callback </summary>
+<summary> answer_button_callback/ </summary>
 <p></p>
-<p> Callback Handlers -> contains the modules for сallback handlers that process callback events</p>
+
+`answer_button_callback/` -> contains the modules for answer buttons callback during the test 
 
 <details>
 <summary> answer_button.py</summary>
@@ -664,10 +682,26 @@ if __name__ == "__main__":
 
 >[**Back to navigation**](#navigation)
 
-some info
+Future plans: 
+
+- Add possibility for mentor to create test with bot test editor
+- Make possible to upload created test from other sources
+- Create Admin status that anable admin commands for exaple to edit `mentors_id` list
+- Anable test passing in random order, attach image to question, create input questions
 
 ---
 
 ## Project Summary
 
 >[**Back to navigation**](#navigation)
+
+This project is a development task to learn some new technologies and improve their skill usage during the project development
+
+During the time I spent, I learned to work with:
+
+* **JSON** files, how to open/load and read/write data into `.json` files
+* Dict data type, I improved my knowledge in using dict methods and used it for main data operations in project
+* Quizze structure, I learned how quizze process is built, and how make it comfortable for users to use
+* Bot structure, how to work with handlers (command, callback, fsm)
+
+The project was really usefull for me, it brought me out to another of understanding how to create my own projects aspecially Telegram bots
