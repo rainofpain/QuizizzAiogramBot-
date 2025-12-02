@@ -1,5 +1,12 @@
 # Quizizz Telegram Bot
 
+![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)
+
+<p>
+    <img src="https://img.shields.io/github/stars/rainofpain/QuizizzAiogramBot?style=social">
+<p>
+
+
 ## About
 This **BOT** provides an opportunity for the teacher to run tests from loaded `.json` file for a group of students with access via code
 
@@ -103,17 +110,20 @@ Documentation contains short description for each package and module to explain 
 
 ---
 <details>
-<summary> Modules </summary>
+<summary> modules/ </summary>
 <p></p>
-<p> Modules -> contains the parts on which the main functionality is based</p>
+
+`modules/` -> contains the parts on which the main functionality is based
+
 <details>
-<summary> Command Handlers </summary>
+<summary> command_handlers/ </summary>
 <p></p>
-<p> Command Handlers -> contains the modules for command handlers that enable bot–user interaction via commands</p>
+
+`command_handlers/` -> contains the modules for command handlers that enable bot–user interaction via commands
 </details>
 
 <details>
-<summary> Callback Handlers </summary>
+<summary> callback_handlers/ </summary>
 <p></p>
 <p> Callback Handlers -> contains the modules for сallback handlers that process callback events</p>
 
@@ -486,7 +496,7 @@ answer_keyboard = types.InlineKeyboardMarkup(inline_keyboard = [])
 ---
 
 <details>
-<summary> Utils </summary>
+<summary> utils/ </summary>
 <p></p>
 <p>Utils -> collection of utility functions used across the project</p>
 
