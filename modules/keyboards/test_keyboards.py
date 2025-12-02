@@ -1,6 +1,4 @@
 import aiogram.types as types
-from config import FinishTestCallback
-
 
 test_keyboard = types.InlineKeyboardMarkup(inline_keyboard = [])
 

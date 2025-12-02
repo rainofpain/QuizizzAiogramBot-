@@ -12,8 +12,9 @@ TOKEN = os.getenv("TOKEN")
 bot = aiogram.Bot(token = TOKEN)
 dispatcher = aiogram.Dispatcher()
 
-my_id = 996602601
-mentors_ids = [my_id]
+mentors_id_list = []
+
+entry_code_list = []
 
 active_tests_list = []
 """

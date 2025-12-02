@@ -1,9 +1,7 @@
-import aiogram
 import aiogram.types as types
 import aiogram.filters.callback_data as callback_data
-import json
 
-from utils import create_path, create_code
+from utils import create_code
 from config import dispatcher, entry_code_list, active_tests_list
 
 
